@@ -1,25 +1,25 @@
 import re
 
+def parse(s):
+    split = re.split('(\d+)',s)
+    return tuple([split[0], int(split[1])])
+
 with open('3.txt', 'r') as f:
-    input = f.read().splitlines()
-input1 = input[0].split(',')
-input2 = input[1].split(',')
-
-l = map(lambda x: re.split('(\d+)', x), input1)
-l2 = map(lambda x: re.split('(\d+)', x), input2)
-
-list1 = []
-list2 = []
-for i in l:
-    list1.append(tuple([i[0], int(i[1])]))
-for i in l2:
-    list2.append(tuple([i[0], int(i[1])]))
+        input = f.read().splitlines()
+input[0] = map(parse, input[0].split(','))
+input[1] = map(parse, input[1].split(','))
 
 class line:
     def __init__(self, start, end):
         self.start = start
         self.end = end
 
+    def steps(self):
+        if(self.start[0] == self.end[0]):
+            return abs(self.start[1] - self.end[1])
+        else:
+            return abs(self.start[0] - self.end[0])
+            
     def intersects(self,line2):
         left = self if self.start[0] < line2.start[0] else line2
         right = self if left != self else line2
@@ -28,12 +28,6 @@ class line:
 
         return left.end[0] > right.end[0] and bottom.end[1] > top.end[1]
     
-    def steps(self):
-        if(self.start[0] == self.end[0]):
-            return abs(self.start[1] - self.end[1])
-        else:
-            return abs(self.start[0] - self.end[0])
-            
     def lengthToPoint(self, point):
         minx = min(self.start[0], self.end[0])
         miny = min(self.start[1], self.end[1])
@@ -57,26 +51,36 @@ def move(moves, dir, amount):
     else:
         print('WTF dude')
 
+def findIntersections(lines1, lines2):
+    intersectsions = []
+    for i in lines1:
+        for j in lines2:
+            if(i.intersects(j)):
+                if i.start[0] == i.end[0]:
+                    intersectsions.append([i.start[0], j.start[1]])
+                else:
+                    intersectsions.append([j.start[0], i.start[1]])
+    return intersectsions
+
 moves1 = [line([0,0],[0,0])]
 moves2 = [line([0,0],[0,0])]
 
-for i,j in zip(list1, list2):
+for i,j in zip(input[0], input[1]):
     move(moves1,*i)
     move(moves2,*j)
 
-intersectsions = []
-for i in moves1:
-    for j in moves2:
-        if(i.intersects(j)):
-            if i.start[0] == i.end[0]:
-                intersectsions.append([i.start[0], j.start[1]])
-            else:
-                intersectsions.append([j.start[0], i.start[1]])
-sum = 0
+intersectsions = findIntersections(moves1, moves2)
 
-sums = []
+# Part 1
+minpath = abs(intersectsions[0][0]) + abs(intersectsions[0][1])
 for i in intersectsions:
-    sums.append(0)
+    cost = abs(i[0]) + abs(i[1])
+    if cost < minpath: 
+        minpath = cost
+print("Part 1: " + str(minpath))
+
+# Part 2
+sums = [0]*len(intersectsions)
 
 index = 0
 for i in intersectsions:
@@ -94,4 +98,4 @@ for i in intersectsions:
             break
     index += 1
 
-print(min(sums))
+print("Part 2: " + str(min(sums)))
