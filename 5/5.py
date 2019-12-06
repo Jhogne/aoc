@@ -9,10 +9,8 @@ def run(code):
     while code[i] != 99:
         opmodes = str(code[i])[::-1]
         op = int(opmodes[:1])
-
         for _ in range(0, lengths[op - 1][1] - len(opmodes)):
             opmodes += '0'
-        
         params = []
         for offset,m in enumerate(opmodes[2:], start=1):
             if offset == 3: # write to is always immediate mode and always third parameter 
