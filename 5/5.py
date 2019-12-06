@@ -2,14 +2,14 @@ with open('5.txt', 'r') as f:
     string = f.read().split(',')
 numbers = [int(x) for x in string]
 
-lengths = list(zip(range(1,9),[5,5,3,3,4,4,5,5]))
+lengths = [5,5,3,3,4,4,5,5]
 
 def run(code):
     i = 0
     while code[i] != 99:
         opmodes = str(code[i])[::-1]
         op = int(opmodes[:1])
-        for _ in range(0, lengths[op - 1][1] - len(opmodes)):
+        for _ in range(0, lengths[op - 1] - len(opmodes)):
             opmodes += '0'
         params = []
         for offset,m in enumerate(opmodes[2:], start=1):
