@@ -1,6 +1,3 @@
-part2 = True
-msg = "Part2: " if part2 else "Part1: "
-
 with open('5.txt', 'r') as f:
     string = f.read().split(',')
 numbers = [int(x) for x in string]
