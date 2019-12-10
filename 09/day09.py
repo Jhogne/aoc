@@ -1,4 +1,4 @@
-with open('9.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     string = f.read().split(',')
 numbers = [int(x) for x in string]
 

@@ -1,4 +1,4 @@
-with open('8.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     string = f.read().strip()
 layers = [string[i:i+25*6] for i in range(0, len(string), 25*6)] 
 

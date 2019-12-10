@@ -1,4 +1,4 @@
-with open('6.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     strings = f.read().splitlines()
 inputs = [s.split(')') for s in strings]
 

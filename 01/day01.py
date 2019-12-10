@@ -3,7 +3,7 @@ import math
 part2 = False
 msg = "Part2: " if part2 else "Part1: "
 
-with open('1.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     input = f.read().splitlines()
 
 sum = 0

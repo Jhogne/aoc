@@ -4,7 +4,7 @@ def parse(s):
     split = re.split('(\d+)',s)
     return tuple([split[0], int(split[1])])
 
-with open('3.txt', 'r') as f:
+with open('input.txt', 'r') as f:
         input = f.read().splitlines()
 input[0] = map(parse, input[0].split(','))
 input[1] = map(parse, input[1].split(','))
