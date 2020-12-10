@@ -17,6 +17,11 @@ for i in jolts:
     last = i
 
 # Part 2
+# Count the number of ways to remove adapters from the full sequence 
+# No more than two subsequent adapters can be removed at the same time, minimal example:
+# 1 2 3 4 5
+# if 2 3 4 are removed causes the difference to be too large (5 - 1 = 4; 4 > 3)
+
 # 1. Find all removable adapters
 chunks = [jolts[i:i+3] for i in range(len(jolts)-2)]
 removable = []
@@ -32,17 +37,22 @@ for pre,curr,post in removable[1:]:
         removable_without_prev.append(curr)
     new_pre = pre
 
-# Count the number of ways to remove adapters and still have a valid sequence
-count = 2
+# 3. Count the number of ways to remove adapters and still have a valid sequence
+count = 2 # First removable always causes two cases (Choose it or not)
 two_removable_before = False
-for (pre,curr,_),prev_seen in zip(removable, [0]+[x[1] for x in removable]):
-    if curr in removable_without_prev or pre != prev_seen:
-        if pre == prev_seen and two_removable_before:
-            count += 3 * count / 4 # Do not add the cases where previous two are removed 
-        else:
-            count *= 2
-    else:
-        count += (count // 2) - 1 # Not the one case where previous two are removed
+# Iterate over all removable adapters, aswell as the removable adapter to it's left
+for (pre,curr,_),prev_rem in zip(removable[1:], [x[1] for x in removable]):
+    # If curr is removable, and the two predecessors are also removable.
+    if pre == prev_rem and two_removable_before: 
+        # Double, but without the quarter of the cases where previous two are removed 
+        # prev1 prev2 < ok
+        # _     prev2 < ok
+        # prev1 _     < ok
+        # _     _     < not ok since max 2 subsequent adapters can be removed
+        count += 3 * count / 4 
+    # Otherwise, if predecessor isn't removable, or only the immidiate predecessor is removable
+    elif pre != prev_rem or curr in removable_without_prev:
+        count *= 2 # The current adapter is either added to the sequence, or not, doubling the cases
     two_removable_before = curr in removable_without_prev
 
 print("Part 1:",jolt1*jolt3)
