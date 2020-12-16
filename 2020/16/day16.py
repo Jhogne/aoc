@@ -1,56 +1,45 @@
 import re
 from collections import defaultdict
-import time
 
-start = time.time()
 with open('input.txt', 'r') as f:
-    lines = f.read().strip().split('\n\n')
+    rules, my, others = f.read().strip().split('\n\n')
 
+# Add all tuples (low,high) for all ranges in the list
 ranges = []
-for rule in lines[0].split('\n'):
-    a,b,c,d = re.search(r'(\d+)-(\d+) or (\d+)-(\d+)',rule).groups()
-    ranges.append((int(a),int(b)))
-    ranges.append((int(c),int(d)))
+for rule in rules.split('\n'):
+    l1, r1, l2, r2 = re.search(r'(\d+)-(\d+) or (\d+)-(\d+)', rule).groups()
+    ranges.append((int(l1), int(r1)))
+    ranges.append((int(l2), int(r2)))
 
-rate = 0
-valid = []
-for ticket in lines[2][16:].split('\n'):
-    t = []
-    for value in ticket.split(','):
-        valid_ticket = any(lo <= int(value) <= hi for lo,hi in ranges)
-        if not valid_ticket:
-            break
-        else:
-            t.append(int(value))
-    if not valid_ticket:
-        rate += int(value)
-    else:
-        valid.append(t)
-    
+# Filter out the invalid passwords and solve part 1
+p1 = 0
+valids = []
+for ticket in others.splitlines()[1:]:
+    ticket = [int(n) for n in ticket.split(',')]
+    invalids = [value for value in ticket if not any(
+        lo <= int(value) <= hi for lo, hi in ranges)]
+    p1 += sum(invalids)
+    if len(invalids) == 0:
+        valids.append(ticket)
+
+# Find the index of the possible rules for each number in each ticket
 fields = defaultdict(list)
-for ticket in valid:
-    for index,value in enumerate(ticket):
-        candidates = []
-        for i,(lo,hi) in enumerate(ranges):
-            if lo <= value <= hi:
-                candidates.append(i//2)
-        fields[index].append(candidates)
+for ticket in valids:
+    for field_idx, value in enumerate(ticket):
+        candidates = set(
+            [i // 2 for i, (lo, hi) in enumerate(ranges) if lo <= value <= hi])
+        fields[field_idx].append(candidates)
 
-my_ticket = lines[1][13:].split(',')
-done = []
-order = []
-while len(order) < len(my_ticket):
-    for i,field in enumerate(fields):
-        foo = set.intersection(*map(set, fields[field])) - set(done)
-        if len(foo) == 1:
-            order.append((field,list(foo)[0]))
-            done += list(foo)
+# Find the only possible rule for each number index and solve part 2
+my_ticket = my.splitlines()[1].split(',')
+done = set()
+p2 = 1
+while len(done) < len(my_ticket):
+    for field in fields:
+        candidates = set.intersection(*fields[field]) - done
+        if len(candidates) == 1:
+            done.update(candidates)
+            p2 *= int(my_ticket[field]) if candidates.pop() < 6 else 1
 
-acc = 1
-for idx,field in order:
-    if field < 6:
-        acc *= int(my_ticket[idx])
-
-print("Part 1:",rate)
-print("Part 2:",acc)
-print(time.time() - start)
+print("Part 1:", p1)
+print("Part 2:", p2)
