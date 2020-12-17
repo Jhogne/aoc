@@ -1,61 +1,35 @@
-from itertools import permutations
+from itertools import product
 
 with open('input.txt', 'r') as f:
     lines = f.read().splitlines()
 
-state = [[l for l in lines]]
+def get_neighbourhood(pos):
+    return list(product(*[range(i-1, i+2) for i in pos]))
 
-def get_neighbours(x,y,z):
-    neighbours = []
-    for i in range(-1,2):
-        for j in range(-1,2):
-            for k in range(-1,2):
-                if not i == j == k == 0:
-                   neighbours.append((x+i,y+j,z+k))
-    return neighbours                            
+def active_neighbours(active, positions, me):
+    return sum(pos in active for pos in positions if pos != me)
 
-def count_active(state,positions):
-    count = 0
-    for pos in positions:
-        if pos[0] >= 0 and pos[1] >= 0 and pos[2] >= 0 and pos[0] < len(state) and pos[1] < len(state[0]) and pos[2] < len(state[0][0]):
-            count += state[pos[0]][pos[1]][pos[2]] == '#'
-    return count
-
-def step(state):
-
-    new_state = [[ ['.' for col in range(len(state[0])+2)] for col in range(len(state[0])+2)] for row in range(len(state))] 
-
-    for x in range(len(new_state)):
-        for y in range(len(new_state[x])):
-            for z in range(len(new_state[x][y])):
-                active = count_active(state,get_neighbours(x,y-1,z-1))
-                if 0 < z <= len(state[0][0]) and 0 < x <= len(state) and 0 < y <= len(state[0]):
-                    if state[x][y-1][z-1] == '#' and (active == 2 or active == 3):
-                        new_state[x][y][z] = '#'
-                    elif state[x][y-1][z-1] == '.' and active == 3:
-                        new_state[x][y][z] = '#'
-                elif active == 3:
-                        new_state[x][y][z] = '#'
-    return new_state
-
-def pretty_print(state):
-    for z in range(len(state)):
-        print("z = {}".format(z))
-        for x in state[z]:
-            print(x)
+def solve(active):
+    to_check = set(sum([get_neighbourhood(pos) for pos in active], []))
+    for _ in range(6):
+        next_active, next_check = set(), set()
+        for pos in to_check:
+            neighbourhood = get_neighbourhood(pos)
+            amt = active_neighbours(active, neighbourhood, pos)
+            if pos in active and (amt == 2 or amt == 3):
+                next_active.add(pos)
+                next_check.update(neighbourhood)
+            elif pos not in active and amt == 3:
+                next_active.add(pos)
+                next_check.update(neighbourhood)
+        active, to_check = next_active, next_check
+    return len(next_active)
 
 
-for i in range(6):
-    #print("Old state:",state)
-    new_layer = state[0].copy()
-    new_layer = ['.' * len(new_layer[0]) for _ in new_layer]
-    state.insert(0,new_layer)
-    state.append(new_layer)
-    pretty_print(state)
+active3D = set([(x, y, 0) for x, row in enumerate(lines)
+                for y, item in enumerate(row) if item == '#'])
+active4D = set([(x, y, 0, 0) for x, row in enumerate(lines)
+                for y, item in enumerate(row) if item == '#'])
 
-    state = step(state)    
-
-
-print(sum(x.count('#') for y in state for x in y))
-print("Part 1:")
-print("Part 2:")
+print("Part 1:", solve(active3D))
+print("Part 2:", solve(active4D))
