@@ -16,15 +16,12 @@ def solve(active):
         for pos in to_check:
             neighbourhood = get_neighbourhood(pos)
             amt = active_neighbours(active, neighbourhood, pos)
-            if pos in active and (amt == 2 or amt == 3):
-                next_active.add(pos)
-                next_check.update(neighbourhood)
-            elif pos not in active and amt == 3:
+            if pos in active and amt == 2 or amt == 3 or \
+                    pos not in active and amt == 3:
                 next_active.add(pos)
                 next_check.update(neighbourhood)
         active, to_check = next_active, next_check
     return len(next_active)
-
 
 active3D = set([(x, y, 0) for x, row in enumerate(lines)
                 for y, item in enumerate(row) if item == '#'])
