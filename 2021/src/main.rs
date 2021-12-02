@@ -18,12 +18,11 @@ fn main() {
 
 
 fn get_day(day: u8) -> (fn(&String) -> String, fn(&String) -> String) {
-    let f: (fn(&String) -> String, fn(&String) -> String) = match day {
+    match day {
         01 => (sols::day01::solve_1, sols::day01::solve_2),
-        _ => panic!("This shouldn't happen :)"),
-    };
-
-    f
+	 	02 => (sols::day02::solve_1, sols::day02::solve_2),
+        _ => unreachable!()
+    }
 }
 
 

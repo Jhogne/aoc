@@ -21,5 +21,5 @@ if ! grep -q "$mod" src/sols/mod.rs; then
 fi
 
 if ! grep -q "$match" src/main.rs; then
-	sed -i "/This shouldn't happen/i \\\t \t$match" src/main.rs
+	sed -i "/unreachable!()/i \\\t \t$match" src/main.rs
 fi
