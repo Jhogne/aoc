@@ -2,7 +2,7 @@
 year="2021"
 day="$(printf '%02d\n' $1)"
 mod="pub mod day$day;"
-match="$day => (sols::day$day::solve_1, sols::day$day::solve_2),"
+match="$1 => (sols::day$day::solve_1, sols::day$day::solve_2),"
 
 if (( day < 1 )); then
 	exit 1 

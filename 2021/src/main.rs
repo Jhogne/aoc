@@ -2,6 +2,7 @@ use std::{fs,env};
 
 mod sols;
 
+type Solution = fn(&str) -> String;
 fn main() {
     let usr_in = &env::args().collect::<Vec<String>>()[1].parse::<u8>();
     let day = match usr_in {
@@ -17,12 +18,12 @@ fn main() {
 }
 
 
-fn get_day(day: u8) -> (fn(&String) -> String, fn(&String) -> String) {
+fn get_day(day: u8) -> (Solution, Solution) {
     match day {
-        01 => (sols::day01::solve_1, sols::day01::solve_2),
-	 	02 => (sols::day02::solve_1, sols::day02::solve_2),
-	 	03 => (sols::day03::solve_1, sols::day03::solve_2),
-	 	04 => (sols::day04::solve_1, sols::day04::solve_2),
+        1 => (sols::day01::solve_1, sols::day01::solve_2),
+	 	2 => (sols::day02::solve_1, sols::day02::solve_2),
+	 	3 => (sols::day03::solve_1, sols::day03::solve_2),
+	 	4 => (sols::day04::solve_1, sols::day04::solve_2),
         _ => unreachable!()
     }
 }

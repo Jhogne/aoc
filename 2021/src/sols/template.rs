@@ -1,10 +1,10 @@
-pub fn solve_1(_input: &String) -> String {
+pub fn solve_1(_input: &str) -> String {
 
     "not implemented".to_string()
 }
 
 
-pub fn solve_2(_input: &String) -> String {
+pub fn solve_2(_input: &str) -> String {
 
     "not implemented".to_string()
 }

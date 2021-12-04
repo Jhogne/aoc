@@ -1,4 +1,4 @@
-pub fn solve_1(input: &String) -> String {
+pub fn solve_1(input: &str) -> String {
     let (x,y) = input
         .split_whitespace()
         .collect::<Vec<_>>()
@@ -14,7 +14,7 @@ pub fn solve_1(input: &String) -> String {
     (x * y).to_string()
 }
 
-pub fn solve_2(input: &String) -> String {
+pub fn solve_2(input: &str) -> String {
     let (x,y,_) = input
         .split_whitespace()
         .collect::<Vec<_>>()

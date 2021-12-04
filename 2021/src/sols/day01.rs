@@ -1,4 +1,4 @@
-pub fn solve_1(input: &String) -> String {
+pub fn solve_1(input: &str) -> String {
     let depths = input
         .lines()
         .map(|d| d.parse::<u32>().unwrap())
@@ -7,7 +7,7 @@ pub fn solve_1(input: &String) -> String {
 }
 
 
-pub fn solve_2(input: &String) -> String {
+pub fn solve_2(input: &str) -> String {
     let depths = input
         .lines()
         .map(|d| d.parse::<u32>().unwrap())

@@ -1,4 +1,4 @@
-pub fn solve_1(input: &String) -> String {
+pub fn solve_1(input: &str) -> String {
     let iters: Vec<_> = input.lines().collect();
     let len = iters[0].len();
 
@@ -33,7 +33,7 @@ fn find_rating(mut nums: Vec<&str>, comparator: fn(usize, usize) -> bool) -> &st
     unreachable!()
 }
 
-pub fn solve_2(input: &String) -> String {
+pub fn solve_2(input: &str) -> String {
     let iters: Vec<_> = input.lines().collect();
     let o2 = isize::from_str_radix(find_rating(iters.clone(), |x, y| x >= y), 2).unwrap();
     let co2 = isize::from_str_radix(find_rating(iters.clone(), |x, y| x < y), 2).unwrap();

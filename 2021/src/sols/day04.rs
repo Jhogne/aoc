@@ -9,7 +9,8 @@ fn transpose<T: Copy>(a: Vec<T>, width: usize, height: usize) -> Vec<T> {
     }
     t
 }
-fn parse(input: &String) -> (Vec<usize>, Vec<Board>) {
+
+fn parse(input: &str) -> (Vec<usize>, Vec<Board>) {
     let mut parts = input.split("\n\n");
     let nums = parts
         .next()
@@ -54,7 +55,7 @@ fn mark(board: &Board, num: usize) -> Board {
         .collect()
 }
 
-pub fn solve_1(input: &String) -> String {
+pub fn solve_1(input: &str) -> String {
 
     let (nums, mut boards) = parse(input);
 
@@ -70,7 +71,7 @@ pub fn solve_1(input: &String) -> String {
     panic!("No solution found");
 }
 
-pub fn solve_2(input: &String) -> String {
+pub fn solve_2(input: &str) -> String {
     let (nums, mut boards) = parse(input);
 
     let mut won: Vec<_> = (0..boards.len()).collect();
