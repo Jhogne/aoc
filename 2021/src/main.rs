@@ -1,3 +1,5 @@
+#![feature(test)]
+
 use std::{fs,env};
 
 mod sols;
@@ -5,21 +7,28 @@ mod sols;
 type Solution = fn(&str) -> String;
 
 fn main() {
-    let usr_in = &env::args().collect::<Vec<String>>()[1].parse::<u8>();
-    let day = match usr_in {
-        Ok(n) => n,
-        Err(_) => panic!("Invalid day"),
-    };
-    let in_file = format!("inputs/{}.txt", day);
-    let input = fs::read_to_string(in_file).unwrap();
-    let fns = get_day(*day);
+    let day: usize = env::args()
+        .collect::<Vec<String>>()
+        .get(1)
+        .expect("Provide a day")
+        .parse()
+        .expect("Provide a number");
 
-    println!("{}", fns.0(&input));
-    println!("{}", fns.1(&input));
+    let (input, part_1, part_2) = get_day(day);
+
+    println!("{}", part_1(&input));
+    println!("{}", part_2(&input));
 }
 
+fn get_day(day: usize) -> (String, Solution, Solution) {
+    let f = format!("inputs/{}.txt", day);
+    let input = fs::read_to_string(f).expect("Day not done yet");
+    let (part_1, part_2) = get_solutions(day);
 
-fn get_day(day: u8) -> (Solution, Solution) {
+    (input, part_1, part_2)
+}
+
+fn get_solutions(day: usize) -> (Solution, Solution) {
     match day {
         1 => (sols::day01::solve_1, sols::day01::solve_2),
 	 	2 => (sols::day02::solve_1, sols::day02::solve_2),
@@ -29,4 +38,32 @@ fn get_day(day: u8) -> (Solution, Solution) {
     }
 }
 
+#[cfg(test)]
+mod test {
+    extern crate test;
+    use test::Bencher;
+    use crate::get_day;
+    use crate::Solution;
+    use std::env;
 
+    pub fn setup_bench() -> (Solution, Solution, String) {
+        let day: usize = env::var("AOC_DAY")
+            .expect("Provide a day")
+            .parse()
+            .expect("Provide a number");
+        let (input, part_1, part_2) = get_day(day);
+        (part_1, part_2, input)
+    }
+
+    #[bench]
+    pub fn bench_part_1(b: &mut Bencher) {
+        let (solver, _, data) = setup_bench();
+        b.iter(|| solver(&data))
+    }
+
+    #[bench]
+    pub fn bench_part_2(b: &mut Bencher) {
+        let (_, solver, data) = setup_bench();
+        b.iter(|| solver(&data))
+    }
+}
