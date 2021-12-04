@@ -15,7 +15,7 @@ pub fn solve_1(input: &str) -> String {
             epsilon += 1;
         }
     }
-    return (gamma * epsilon).to_string()
+    (gamma * epsilon).to_string()
 }
 
 fn find_rating(mut nums: Vec<&str>, comparator: fn(usize, usize) -> bool) -> &str {

@@ -3,6 +3,7 @@ use std::{fs,env};
 mod sols;
 
 type Solution = fn(&str) -> String;
+
 fn main() {
     let usr_in = &env::args().collect::<Vec<String>>()[1].parse::<u8>();
     let day = match usr_in {

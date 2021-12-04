@@ -14,7 +14,7 @@ pub fn solve_2(input: &str) -> String {
         .collect::<Vec<u32>>();
     let sums = depths
         .windows(3)
-        .map(|x| x.into_iter().sum())
+        .map(|x| x.iter().sum())
         .collect::<Vec<u32>>();
     sums.windows(2).filter(|x| x[1] > x[0]).count().to_string()
 }
