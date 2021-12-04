@@ -22,6 +22,7 @@ fn get_day(day: u8) -> (fn(&String) -> String, fn(&String) -> String) {
         01 => (sols::day01::solve_1, sols::day01::solve_2),
 	 	02 => (sols::day02::solve_1, sols::day02::solve_2),
 	 	03 => (sols::day03::solve_1, sols::day03::solve_2),
+	 	04 => (sols::day04::solve_1, sols::day04::solve_2),
         _ => unreachable!()
     }
 }
