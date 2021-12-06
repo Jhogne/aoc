@@ -1,27 +1,34 @@
 use std::collections::HashMap;
 
-fn live_after(days: usize, lifetime: usize, seen: &mut HashMap<(usize, usize), usize>) -> usize {
-    if lifetime >= days {
-        return 1;
+fn alive_after(days: usize, seen: &mut HashMap<usize, usize>) -> usize {
+    if days <= 7 {
+        return 2
     }
 
-    if seen.contains_key(&(lifetime, days)) {
-        return *seen.get(&(lifetime, days)).unwrap();
+    if days <= 9 {
+        return 3
     }
 
-    let alive = live_after(days - lifetime - 1, 6, seen) + live_after(days - lifetime - 1, 8, seen);
-    seen.insert((lifetime, days), alive);
+    if seen.contains_key(&days) {
+        return *seen.get(&days).unwrap();
+    }
+
+    let alive = alive_after(days - 7, seen) + alive_after(days - 9, seen);
+    seen.insert(days, alive);
     alive 
 }
 
 pub fn solve(input: &str, days: usize) -> String {
-    let fishes = input.trim().split(',').map(|c| c.parse().unwrap());
+    let fishes = input
+        .trim()
+        .split(',')
+        .map(|c| c.parse::<usize>().unwrap());
 
     let seen = &mut HashMap::new();
     let mut count: usize= 0;
 
     for fish in fishes {
-        count += live_after(days, fish, seen);
+        count += alive_after(days - fish, seen);
     }
     count.to_string()
 }
