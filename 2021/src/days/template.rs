@@ -11,8 +11,11 @@ pub fn solve_2(_input: &str) -> String {
 
 #[test]
 fn example() {
-    let input = "".to_string();
+    let input = "".trim().to_string();
 
+    println!("Part 1:");
     assert_eq!(solve_1(&input), "not implemented");
+
+    println!("Part 2:");
     assert_eq!(solve_2(&input), "not implemented");
 }
