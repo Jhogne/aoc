@@ -50,9 +50,14 @@ pub fn solve_2(input: &str) -> String {
     count_overlap(segs).to_string()
 }
 
-#[test]
-fn example() {
-    let input = "0,9 -> 5,9
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str =
+        "
+0,9 -> 5,9
 8,0 -> 0,8
 9,4 -> 3,4
 2,2 -> 2,1
@@ -62,8 +67,17 @@ fn example() {
 3,4 -> 1,4
 0,0 -> 8,8
 5,5 -> 8,2
-".to_string();
+        ";
 
-    assert_eq!(solve_1(&input), "5");
-    assert_eq!(solve_2(&input), "12");
+
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "5");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "12");
+    }
 }
+

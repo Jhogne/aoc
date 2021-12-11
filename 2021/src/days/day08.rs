@@ -68,9 +68,14 @@ pub fn solve_2(input: &str) -> String {
     count.to_string()
 }
 
-#[test]
-fn example() {
-    let input = "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str =
+        "
+be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
 fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg
 fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb
@@ -80,10 +85,19 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
-".to_string();
-    let input_small = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf".to_string();
+        ";
 
-    assert_eq!(solve_1(&input), "26");
-    assert_eq!(solve_2(&input_small), "5353");
-    assert_eq!(solve_2(&input), "61229");
+    const INPUT_SMALL: &str = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf";
+
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "26");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT_SMALL.trim().to_string()), "5353");
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "61229");
+    }
 }
+

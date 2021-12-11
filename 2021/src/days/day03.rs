@@ -40,10 +40,14 @@ pub fn solve_2(input: &str) -> String {
     (o2 * co2).to_string()
 }
 
-#[test]
-fn example() {
-    let input = 
-"00100
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str =
+    "
+00100
 11110
 10110
 10111
@@ -55,8 +59,17 @@ fn example() {
 11001
 00010
 01010
-".to_string();
+    ";
 
-    assert_eq!(solve_1(&input), "198");
-    assert_eq!(solve_2(&input), "230");
+
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "198");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "230");
+    }
 }
+

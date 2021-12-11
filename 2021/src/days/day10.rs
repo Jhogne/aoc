@@ -70,9 +70,13 @@ pub fn solve_2(input: &str) -> String {
         .to_string()
 }
 
-#[test]
-fn example() {
-    let input = "
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str =
+        "
 [({(<(())[]>[[{[]{<()<>>
 [(()[<>])]({[<{<<[]>>(
 {([(<{}[<>[]}>{[]{[(<()>
@@ -83,11 +87,18 @@ fn example() {
 [<(<(<(<{}))><([]([]()
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]
-    ".trim();
+        ";
 
-    println!("Example 1");
-    assert_eq!(solve_1(&input), "26397");
 
-    println!("Example 2");
-    assert_eq!(solve_2(&input), "288957");
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "26397");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "288957");
+    }
 }
+
+

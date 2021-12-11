@@ -73,4 +73,5 @@ mod test {
         let (_, solver, data) = setup_bench();
         b.iter(|| solver(&data))
     }
+
 }

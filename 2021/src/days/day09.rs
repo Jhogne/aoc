@@ -63,15 +63,29 @@ pub fn solve_2(input: &str) -> String {
     (a * b * c).to_string()
 }
 
-#[test]
-fn example() {
-    let input = "2199943210
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str =
+        "
+2199943210
 3987894921
 9856789892
 8767896789
 9899965678
-".to_string();
+        ";
 
-    assert_eq!(solve_1(&input), "15");
-    assert_eq!(solve_2(&input), "1134");
+
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "15");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "1134");
+    }
 }
+

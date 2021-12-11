@@ -47,10 +47,22 @@ pub fn solve_2(input: &str) -> String {
         .to_string()
 }
 
-#[test]
-fn example() {
-    let input = "16,1,2,0,4,2,7,1,2,14".to_string();
+#[cfg(test)]
+mod test {
 
-    assert_eq!(solve_1(&input), "37");
-    assert_eq!(solve_2(&input), "168");
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str = "16,1,2,0,4,2,7,1,2,14";
+
+
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "37");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "168");
+    }
 }
+

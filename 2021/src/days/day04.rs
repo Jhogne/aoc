@@ -90,9 +90,14 @@ pub fn solve_2(input: &str) -> String {
     panic!("No solution found");
 }
 
-#[test]
-fn example() {
-    let input = "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str =
+        "
+7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
 22 13 17 11  0
  8  2 23  4 24
@@ -111,8 +116,17 @@ fn example() {
 18  8 23 26 20
 22 11 13  6  5
  2  0 12  3  7
-".to_string();
+    ";
 
-    assert_eq!(solve_1(&input), "4512");
-    assert_eq!(solve_2(&input), "1924");
+
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "4512");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "1924");
+    }
 }
+

@@ -1,1 +1,1 @@
-AOC_DAY=$1 cargo bench
+AOC_DAY=$1 cargo bench bench_part_

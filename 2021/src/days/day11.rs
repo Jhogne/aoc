@@ -76,9 +76,13 @@ pub fn solve_2(input: &str) -> String {
     } 
 }
 
-#[test]
-fn example() {
-    let input = "
+#[cfg(test)]
+mod test {
+
+    use super::{solve_1, solve_2};
+
+    const INPUT: &str = 
+        "
 5483143223
 2745854711
 5264556173
@@ -89,11 +93,16 @@ fn example() {
 6882881134
 4846848554
 5283751526
-        ".trim().to_string();
+        ";
 
-    println!("Part 1:");
-    assert_eq!(solve_1(&input), "1656");
 
-    println!("Part 2:");
-    assert_eq!(solve_2(&input), "195");
+    #[test]
+    pub fn example_part_1() {
+        assert_eq!(solve_1(&INPUT.trim().to_string()), "1656");
+    }
+
+    #[test]
+    fn example_part_2() {
+        assert_eq!(solve_2(&INPUT.trim().to_string()), "195");
+    }
 }
