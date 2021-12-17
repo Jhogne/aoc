@@ -4,7 +4,7 @@ day="$(printf '%02d\n' $1)"
 mod="pub mod day$day;"
 match="$1 => (days::day$day::solve_1, days::day$day::solve_2),"
 
-if (( day < 1 )); then
+if (( day < 1 || day > 25)); then
 	exit 1 
 fi
 
@@ -17,7 +17,7 @@ if [ ! -f inputs/$1.txt ]; then
 fi
 
 if ! grep -q "$mod" src/days/mod.rs; then
-	echo "pub mod day$day;" >> "src/days/mod.rs"
+	echo "$mod" >> "src/days/mod.rs"
 fi
 
 if ! grep -q "$match" src/main.rs; then
