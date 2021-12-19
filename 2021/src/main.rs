@@ -47,6 +47,8 @@ fn get_solutions(day: usize) -> (Solution, Solution) {
 	 	15 => (days::day15::solve_1, days::day15::solve_2),
 	 	16 => (days::day16::solve_1, days::day16::solve_2),
 	 	17 => (days::day17::solve_1, days::day17::solve_2),
+	 	18 => (days::day18::solve_1, days::day18::solve_2),
+	 	19 => (days::day19::solve_1, days::day19::solve_2),
         _ => unreachable!()
     }
 }
