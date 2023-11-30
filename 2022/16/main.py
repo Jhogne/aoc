@@ -34,6 +34,7 @@ def p1(curr, minutes, closed):
     return res
 
 relevant = frozenset([key for key in weights.keys() if weights[key] != 0])
+
 print(p1('AA', 30, relevant))
 
 best = 0
@@ -47,5 +48,3 @@ for i in range(len(relevant)):
         best = max(tot, best)
 
 print(best)
-exit()
-
