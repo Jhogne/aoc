@@ -5,6 +5,6 @@ from ast import literal_eval
 from itertools import count, pairwise
 from collections import defaultdict
 
-with open('input.txt', 'r') as f:
+with open('test.in', 'r') as f:
     lines = f.read().strip().splitlines()
 
