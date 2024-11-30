@@ -1,5 +1,5 @@
 #!/bin/bash
-year="2023"
+year="2024"
 day="$(printf '%02d\n' $1)"
 
 if (( day < 1 || day > 25)); then
