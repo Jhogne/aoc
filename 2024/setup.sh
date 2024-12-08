@@ -13,3 +13,4 @@ if [ ! -f $day/main.py ]; then
 fi
 
 curl --cookie $(cat "$XDG_DATA_HOME/aoc/cookie") "https://adventofcode.com/$year/day/$1/input" > $day/real.in
+cat $day/real.in
